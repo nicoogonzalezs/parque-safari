@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Ventas - Parque Safari</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f5ed;
+            color: #333;
+        }
+
+        header {
+            background-color: #245c36;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        header p {
+            margin: 0;
+        }
+
+        .contenedor {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .contenido {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #245c36;
+            margin-top: 0;
+        }
+
+        .descripcion {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .acciones {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .boton {
+            display: inline-block;
+            background-color: #245c36;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .boton:hover {
+            background-color: #174025;
+        }
+
+        .boton-volver {
+            background-color: #777;
+        }
+
+        .boton-volver:hover {
+            background-color: #555;
+        }
+
+        .tabla-contenedor {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th {
+            background-color: #245c36;
+            color: white;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8faf7;
+        }
+
+        tr:hover {
+            background-color: #edf5e9;
+        }
+
+        .total {
+            font-weight: bold;
+            color: #245c36;
+        }
+
+        .sin-datos {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .detalle {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 13px;
+        }
+
+        .detalle li {
+            margin-bottom: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .contenedor {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .contenido {
+                padding: 20px;
+            }
+
+            .acciones {
+                flex-direction: column;
+            }
+
+            .boton {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Parque Safari</h1>
+        <p>Sistema Web de Ventas y Pedidos</p>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="contenido">
+
+            <h2>Listado de ventas</h2>
+
+            <p class="descripcion">
+                Consulta las ventas registradas
+                en el sistema.
+            </p>
+
+            <div class="acciones">
+                <a href="{% url 'panel' %}"
+                   class="boton boton-volver">
+                    Volver al panel
+                </a>
+
+                <a href="{% url 'registrar_venta' %}"
+                   class="boton">
+                    Registrar nueva venta
+                </a>
+            </div>
+
+            <div class="tabla-contenedor">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>N° Venta</th>
+                            <th>Fecha</th>
+                            <th>Punto de venta</th>
+                            <th>Productos</th>
+                            <th>Medio de pago</th>
+                            <th>Modalidad</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for venta in ventas %}
+                        <tr>
+                            <td>{{ venta.id }}</td>
+
+                            <td>
+                                {{ venta.fecha_venta|date:"d/m/Y H:i" }}
+                            </td>
+
+                            <td>
+                                {{ venta.punto_venta.nombre }}
+                            </td>
+
+                            <td>
+                                <ul class="detalle">
+                                    {% for detalle in venta.detalles.all %}
+                                        <li>
+                                            {{ detalle.producto.nombre }}
+                                            (x{{ detalle.cantidad }})
+                                        </li>
+                                    {% empty %}
+                                        <li>Sin productos</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+
+                            <td>
+                                {{ venta.get_medio_pago_display }}
+                            </td>
+
+                            <td>
+                                {{ venta.get_modalidad_atencion_display }}
+                            </td>
+
+                            <td class="total">
+                                ${{ venta.total|floatformat:0 }}
+                            </td>
+                        </tr>
+
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="sin-datos">
+                                No hay ventas registradas.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        Sistema Web de Ventas y Pedidos - Parque Safari
+    </footer>
+
+</body>
+</html>

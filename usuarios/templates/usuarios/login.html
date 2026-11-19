@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión - Parque Safari</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f5ed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .login {
+            background: white;
+            padding: 40px;
+            width: 350px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #245c36;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #245c36;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #174025;
+        }
+
+        .error {
+            color: #c62828;
+            font-size: 14px;
+        }
+
+        a {
+            color: #245c36;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login">
+        <h1>Parque Safari</h1>
+        <h2>Iniciar sesión</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <p class="error">Usuario o contraseña incorrectos.</p>
+            {% endif %}
+
+            <input
+                type="text"
+                name="username"
+                placeholder="Nombre de usuario"
+                autocomplete="username"
+                required
+            >
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Contraseña"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit">Ingresar</button>
+        </form>
+
+        <p><a href="/">Volver al inicio</a></p>
+    </div>
+
+</body>
+</html>

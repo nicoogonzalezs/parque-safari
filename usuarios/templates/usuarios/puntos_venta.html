@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puntos de venta - Parque Safari</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f5ed;
+            color: #333;
+        }
+
+        header {
+            background-color: #245c36;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        header p {
+            margin: 0;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .tarjeta {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #245c36;
+        }
+
+        .tabla-contenedor {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #245c36;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f0f5ed;
+        }
+
+        .boton {
+            display: inline-block;
+            background-color: #245c36;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 25px;
+        }
+
+        .boton:hover {
+            background-color: #174025;
+        }
+
+        .vacio {
+            text-align: center;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Parque Safari</h1>
+        <p>Sistema Web de Ventas y Pedidos</p>
+    </header>
+
+    <main class="contenedor">
+        <section class="tarjeta">
+
+            <h2>Puntos de venta</h2>
+            <p>Listado de puntos de venta activos del parque.</p>
+
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Ubicación</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for punto in puntos %}
+                        <tr>
+                            <td>{{ punto.nombre }}</td>
+                            <td>{{ punto.ubicacion }}</td>
+                            <td>Activo</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="vacio">
+                                No hay puntos de venta activos registrados.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <a href="{% url 'panel' %}" class="boton">
+                Volver al panel
+            </a>
+
+        </section>
+    </main>
+
+</body>
+</html>

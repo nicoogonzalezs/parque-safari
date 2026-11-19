@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Panel Principal - Parque Safari</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f5ed;
+            color: #333;
+        }
+
+        header {
+            background-color: #245c36;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        header p {
+            margin: 0;
+        }
+
+        .contenedor {
+            max-width: 1250px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .bienvenida {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .bienvenida h2 {
+            margin-top: 0;
+            color: #245c36;
+        }
+
+        .bienvenida p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .titulo-modulos {
+            color: #245c36;
+            margin-bottom: 20px;
+        }
+
+        .modulos {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .tarjeta {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            min-width: 0;
+        }
+
+        .tarjeta h3 {
+            color: #245c36;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .tarjeta p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .botones {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .boton {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 44px;
+            padding: 12px 15px;
+
+            background-color: #245c36;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+
+            transition: background-color 0.2s;
+        }
+
+        .boton:hover {
+            background-color: #174025;
+        }
+
+        .boton-secundario {
+            background-color: #438957;
+        }
+
+        .boton-secundario:hover {
+            background-color: #2f6940;
+        }
+
+        .cerrar-sesion {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .boton-salir {
+            background-color: #a83232;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .boton-salir:hover {
+            background-color: #852525;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .modulos {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .contenedor {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .modulos {
+                grid-template-columns: 1fr;
+            }
+
+            .tarjeta {
+                padding: 25px;
+            }
+
+            .bienvenida {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Parque Safari</h1>
+        <p>Sistema Web de Ventas y Pedidos</p>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="bienvenida">
+            <h2>Panel principal</h2>
+
+            <p>
+                Bienvenido,
+                <strong>{{ request.user.username }}</strong>.
+            </p>
+
+            <p>
+                Desde este panel puedes acceder a los
+                diferentes módulos del sistema de
+                ventas y pedidos de Parque Safari.
+            </p>
+        </section>
+
+        <h2 class="titulo-modulos">
+            Módulos del sistema
+        </h2>
+
+        <section class="modulos">
+
+            <!-- PRODUCTOS -->
+            <div class="tarjeta">
+
+                <h3>Productos</h3>
+
+                <p>
+                    Consultar los productos registrados
+                    y disponibles para la venta.
+                </p>
+
+                <div class="botones">
+                    <a href="{% url 'productos' %}"
+                       class="boton">
+                        Ver productos
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- VENTAS -->
+            <div class="tarjeta">
+
+                <h3>Ventas</h3>
+
+                <p>
+                    Registrar nuevas ventas y consultar
+                    las transacciones realizadas.
+                </p>
+
+                <div class="botones">
+
+                    <a href="{% url 'registrar_venta' %}"
+                       class="boton">
+                        Registrar venta
+                    </a>
+
+                    <a href="{% url 'listar_ventas' %}"
+                       class="boton boton-secundario">
+                        Ver ventas
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- PEDIDOS -->
+            <div class="tarjeta">
+
+                <h3>Pedidos</h3>
+
+                <p>
+                    Consultar los pedidos de cocina
+                    y actualizar su estado de
+                    preparación y entrega.
+                </p>
+
+                <div class="botones">
+
+                    <a href="{% url 'listar_pedidos' %}"
+                       class="boton">
+                        Ver pedidos
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- PUNTOS DE VENTA -->
+            <div class="tarjeta">
+
+                <h3>Puntos de venta</h3>
+
+                <p>
+                    Consultar los puntos de venta
+                    registrados y activos
+                    dentro de Parque Safari.
+                </p>
+
+                <div class="botones">
+
+                    <a href="{% url 'puntos_venta' %}"
+                       class="boton">
+                        Ver puntos de venta
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CERRAR SESIÓN -->
+        <div class="cerrar-sesion">
+
+            <form method="post"
+                  action="{% url 'logout' %}">
+
+                {% csrf_token %}
+
+                <button type="submit"
+                        class="boton-salir">
+                    Cerrar sesión
+                </button>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <footer>
+        Sistema Web de Ventas y Pedidos - Parque Safari
+    </footer>
+
+</body>
+</html>

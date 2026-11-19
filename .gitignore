@@ -1,0 +1,27 @@
+
+# Entorno virtual
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Variables privadas
+.env
+.env.*
+!.env.example
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Visual Studio Code
+.vscode/
+
+# Base de datos local SQLite
+db.sqlite3
+
+# Archivos temporales
+*.log

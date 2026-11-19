@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parque Safari - Sistema de Ventas</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f5ed;
+            margin: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #245c36;
+            color: white;
+            padding: 35px;
+        }
+
+        main {
+            margin: 70px auto;
+            padding: 30px;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .boton {
+            display: inline-block;
+            background-color: #245c36;
+            color: white;
+            padding: 14px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .boton:hover {
+            background-color: #174025;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Parque Safari</h1>
+        <p>Sistema Web de Ventas y Pedidos</p>
+    </header>
+
+    <main>
+        <h2>Bienvenido al sistema</h2>
+        <p>Plataforma de gestión de ventas, productos y pedidos.</p>
+
+        <a href="{% url 'login' %}" class="boton">Ingresar al sistema</a>
+    </main>
+
+</body>
+</html>

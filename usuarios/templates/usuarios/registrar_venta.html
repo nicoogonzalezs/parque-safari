@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Venta - Parque Safari</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f5ed;
+            color: #333;
+        }
+
+        header {
+            background-color: #245c36;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        header p {
+            margin: 0;
+        }
+
+        .contenedor {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .formulario {
+            background-color: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #245c36;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .descripcion {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .campo {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: white;
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: #245c36;
+        }
+
+        .seccion {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e4eee2;
+            color: #245c36;
+        }
+
+        .boton {
+            display: block;
+            width: 100%;
+            background-color: #245c36;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .boton:hover {
+            background-color: #174025;
+        }
+
+        .boton-volver {
+            background-color: #777;
+        }
+
+        .boton-volver:hover {
+            background-color: #555;
+        }
+
+        .errores {
+            background-color: #ffe6e6;
+            color: #a00000;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .ayuda {
+            color: #777;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .contenedor {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .formulario {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Parque Safari</h1>
+        <p>Sistema Web de Ventas y Pedidos</p>
+    </header>
+
+    <main class="contenedor">
+
+        <div class="formulario">
+
+            <h2>Registrar nueva venta</h2>
+
+            <p class="descripcion">
+                Completa los datos para registrar
+                una venta en el sistema.
+            </p>
+
+            {% if venta_form.errors or detalle_form.errors %}
+                <div class="errores">
+                    Revisa los datos ingresados.
+
+                    {{ venta_form.non_field_errors }}
+                    {{ detalle_form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <h3 class="seccion">Datos de la venta</h3>
+
+                <div class="campo">
+                    <label for="{{ venta_form.punto_venta.id_for_label }}">
+                        Punto de venta
+                    </label>
+
+                    {{ venta_form.punto_venta }}
+                    {{ venta_form.punto_venta.errors }}
+                </div>
+
+                <div class="campo">
+                    <label for="{{ venta_form.medio_pago.id_for_label }}">
+                        Medio de pago
+                    </label>
+
+                    {{ venta_form.medio_pago }}
+                    {{ venta_form.medio_pago.errors }}
+                </div>
+
+                <div class="campo">
+                    <label for="{{ venta_form.modalidad_atencion.id_for_label }}">
+                        Modalidad de atención
+                    </label>
+
+                    {{ venta_form.modalidad_atencion }}
+                    {{ venta_form.modalidad_atencion.errors }}
+                </div>
+
+                <h3 class="seccion">Detalle del producto</h3>
+
+                <div class="campo">
+                    <label for="{{ detalle_form.producto.id_for_label }}">
+                        Producto
+                    </label>
+
+                    {{ detalle_form.producto }}
+                    {{ detalle_form.producto.errors }}
+                </div>
+
+                <div class="campo">
+                    <label for="{{ detalle_form.cantidad.id_for_label }}">
+                        Cantidad
+                    </label>
+
+                    {{ detalle_form.cantidad }}
+                    {{ detalle_form.cantidad.errors }}
+                </div>
+
+                <p class="ayuda">
+                    El precio y el total se calcularán
+                    automáticamente al registrar la venta.
+                </p>
+
+                <button type="submit" class="boton">
+                    Registrar venta
+                </button>
+
+            </form>
+
+            <a href="{% url 'panel' %}" class="boton boton-volver">
+                Volver al panel
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
